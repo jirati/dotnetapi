@@ -1,0 +1,27 @@
+using Microsoft.Extensions.Configuration;
+
+// ...
+
+public class Startup
+{
+    private readonly IConfiguration _configuration;
+
+    public Startup(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Retrieve connection string from appsettings.json
+        var connectionString = _configuration.GetConnectionString("YourConnectionStringName");
+
+        // Use the connection string in your configuration
+        services.AddDbContext<YourDbContext>(options =>
+            options.UseSqlServer(connectionString));
+        
+        // Other service configurations...
+    }
+
+    // Other methods...
+}
